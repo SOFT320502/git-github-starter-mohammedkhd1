@@ -1,0 +1,70 @@
+import java.util.Arrays;
+
+public class Quicksort {
+    int[] array;
+    public Quicksort(int[] array){
+        this.array = array;
+    }
+    int partitionLeftToRight(int low, int hi){
+        int pivot = array[low];
+        int i = low;
+        int j = hi;
+        while (i < j){
+            while (array[i] < pivot){
+                i++;
+            }
+            while (array[j] > pivot){
+                j--;
+            }
+            if (i < j)
+                swap(array,i,j);
+        }
+        swap(array,low,j);
+        return j;
+    }
+    void QuickSortLeftAsPivot(int low,int hi){
+        if (low < hi){
+            int j = divideBringPivot(low,hi);
+            System.out.println(Arrays.toString(array));
+            QuickSortLeftAsPivot(0,j);
+            QuickSortLeftAsPivot(j+1,hi);
+            System.out.println(Arrays.toString(array));
+        }
+    }
+    public int divideBringPivot(int low, int hi) {
+        int i = low;
+        int j = hi + 1;
+        int pivot = array[low];
+        while (true) {
+            while (array[++i] < pivot) {
+                if (i == hi) {
+                    break;
+                }
+            }
+            while (array[--j] > pivot ) {
+                if (i == low) {
+                    break;
+                }
+            }
+            if (i >= j) {
+                break;
+            }
+            swap(array, i, j);
+        }
+        swap(array, low, j);
+        return j;
+    }
+
+    static void swap(int[] arr, int i, int j){
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {2,4,6,74,53,242,54,1,55};
+        Quicksort sort = new Quicksort(arr);
+        sort.QuickSortLeftAsPivot(0, arr.length-1);
+        System.out.println(Arrays.toString(sort.array));
+    }
+}
